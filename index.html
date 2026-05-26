@@ -690,10 +690,12 @@
 
   <div class="form-group">
     <label>Project Details *</label>
-    <textarea id="details" placeholder="Please provide detailed information about your project..." required></textarea>
+    <textarea id="details" placeholder="Please provide detailed information about your project, including requirements, deadlines, and instructions..." required></textarea>
   </div>
 
-  <button type="submit" class="form-submit">Send Message</button>
+  <button type="submit" class="form-submit">
+    Send Message
+  </button>
 </form>
 
 <script>
@@ -701,40 +703,50 @@ document.getElementById("contactForm")
 .addEventListener("submit", function(e) {
     e.preventDefault();
 
+    // Get values
     const name = document.getElementById("fullName").value;
     const email = document.getElementById("email").value;
     const service = document.getElementById("service").value;
     const subject = document.getElementById("subject").value;
     const details = document.getElementById("details").value;
 
-    // Create WhatsApp message
-    const whatsappMessage =
-`New Website Inquiry
+    // Create message
+    const message = `
+📩 NEW WEBSITE PROJECT INQUIRY
 
-Name: ${name}
-Email: ${email}
-Service: ${service}
-Subject: ${subject}
+👤 Full Name: ${name}
+📧 Email Address: ${email}
+🛠 Service Needed: ${service}
+📝 Subject: ${subject}
 
-Project Details:
-${details}`;
+📌 Project Details:
+${details}
+`;
 
-    // Open WhatsApp automatically
+    // ---------- WhatsApp ----------
+    const phoneNumber = "254706804462";
     const whatsappURL =
-`https://wa.me/254706804462?text=${encodeURIComponent(whatsappMessage)}`;
+      `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
 
-    // Send Email automatically
-    const emailSubject = encodeURIComponent("New Website Inquiry");
-    const emailBody = encodeURIComponent(whatsappMessage);
+    // ---------- Email ----------
+    const emailAddress = "omondiedward616@gmail.com";
+    const emailSubject =
+      encodeURIComponent(`New Project Inquiry - ${subject}`);
+    const emailBody =
+      encodeURIComponent(message);
 
-    window.open(
-      `mailto:omondiedward616@gmail.com?subject=${emailSubject}&body=${emailBody}`,
-      "_blank"
-    );
+    const mailtoURL =
+      `mailto:${emailAddress}?subject=${emailSubject}&body=${emailBody}`;
+
+    // Open Email
+    window.open(mailtoURL, "_blank");
 
     // Open WhatsApp
-    window.open(whatsappURL, "_blank");
+    setTimeout(() => {
+      window.open(whatsappURL, "_blank");
+    }, 500);
 
-    alert("Thank you! Your message has been prepared for WhatsApp and email.");
+    // Success alert
+    alert("Thank you! Redirecting to WhatsApp and Email.");
 });
 </script>
